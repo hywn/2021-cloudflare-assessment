@@ -3,7 +3,7 @@ const post_cache = {}
 
 const path = new URLSearchParams(location.search).get('path') || 'top'
 
-document.querySelector('title').setAttribute('value', path)
+document.title = path
 
 const parts = path.split('.')
 document.querySelector('#disp_path').innerHTML = `viewing ${
