@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:8787'
+const BASE_URL = 'https://cloudf.jh7qbe.workers.dev'
 const post_cache = {}
 
 const path = new URLSearchParams(location.search).get('path') || 'top'
