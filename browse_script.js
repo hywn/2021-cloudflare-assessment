@@ -54,6 +54,8 @@ const toggleraw = id => {
 		: my_markdown(post.content)
 }
 
+const by_date = (a, b) => b.date - a.date
+
 const display = post => {
 	const path = (post.id.match(/posts\/\d+\.(.+)/) || [])[1]
 	const link = `<a href='?path=${path}'>[view/reply]</a>`
@@ -68,7 +70,7 @@ const display = post => {
 		(${new Date(post.date).toLocaleString()}) by ${escape_html(post.username)}
 			<a href='javascript:toggleraw("${dom_id}")'>[toggle raw]</a> ${link}
 		<blockquote id='${dom_id}'>${my_markdown(post.content)}</blockquote>
-		${post.children.map(display).join('')}
+		${post.children.sort(by_date).map(display).join('')}
 	</div>`
 }
 
@@ -77,7 +79,7 @@ const display_posts = async json => {
 	json ??= await fetch(`${BASE_URL}/posts/${path}`).then(r => r.json())
 
 	document.querySelector('#disp_posts').innerHTML =
-		`<dl>${path === 'top' ? json.children.map(display).join('') : display(json)}</dl>`
+		`<dl>${path === 'top' ? json.children.sort(by_date).map(display).join('') : display(json)}</dl>`
 }
 
 display_posts()
